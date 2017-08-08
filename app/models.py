@@ -9,9 +9,10 @@ class client(db.Model):
     address_2 = db.Column(db.String(60))
     city = db.Column(db.String(60))
     parish = db.Column(db.String(12))
+    country= db.Column(db.String(10))
     date_created=db.Column(db.Date)
     
-    def __init__(self, cid,contact,first_name, last_name,address_1,address_2,city,parish,date_created):
+    def __init__(self, cid,contact,first_name, last_name,address_1,address_2,city,parish,country,date_created):
         self.cid= cid
         self.contact = contact
         self.first_name= first_name
@@ -20,6 +21,7 @@ class client(db.Model):
         self.address_2 = address_2
         self.city = city
         self.parish = parish
+        self.country= country
         self.date_created= date_created
         
 class product(db.Model):
@@ -27,10 +29,10 @@ class product(db.Model):
     title = db.Column(db.String(50))
     descr= db.Column(db.String(70))
     status= db.Column(db.String(10))
-    weight= db.Column(db.decimal(4))
-    leng = db.Column(db.decimal(5))
-    width = db.Column(db.decimal(5))
-    height = db.Column(db.decimal(5))
+    weight= db.Column(db.Integer)
+    leng = db.Column(db.Integer)
+    width = db.Column(db.Integer)
+    height = db.Column(db.Integer)
     
     def __init__(self,pid,title,descr,status,weight,leng,width,height):
         self.pid=pid
@@ -72,7 +74,8 @@ class assoc(db.Model):
         self.fid=fid
         
 class auth(db.Model):
-    id= db.Column(db.Integer,autoincrement=True)
+    __tablename__="auth"
+    id= db.Column(db.Integer,autoincrement=True, primary_key=True)
     username= db.Column(db.String(30))
     password= db.Column(db.String(80))
     role= db.Column(db.String(300))
