@@ -46,4 +46,38 @@ def logout():
             login= False
             resp={"login":login, "message":message, "error": error}
             return jsonify(resp) 
-   
+ 
+@app.route("/create_account",methods=["POST"])
+def new_acc():
+    if request.method=="POST":
+        first_name= request.form['first_name']
+        last_name= request.form["last_name"]
+        contact= request.form["contact"]
+        trn= request.form["trn"]
+        address_1 = request.form["address_1"]
+        address_2= request.form["address_2"]
+        city= request.form["city"]
+        parish= request.form["parish"]
+        country= request.form["country"]
+        date_created= request.form["date_created"]
+        username= request.form["username"]
+        password= request.form["password"]
+        role= "client"
+        try:
+            newClient= client(contact,first_name, last_name,trn,address_1,address_2,city,parish,country,date_created,username)
+            db.session.add(newClient)
+            newAuth= auth(username,password,role)
+            db.session.add(newAuth)
+            db.session.commit()
+            message= "success"
+            error= None
+            data= [{"first_name":first_name, "last_name":last_name, "username": username}]
+            resp={"data":data, "message":message, "error": error}
+            return jsonify(resp)
+        except:
+            message= "Account not created"
+            error= "Fail"
+            data= None
+            resp={"data":data, "message":message, "error": error}
+            return jsonify(resp)
+            

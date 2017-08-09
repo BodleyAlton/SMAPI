@@ -38,24 +38,27 @@ file_name varchar,
 primary key(fid)
 );
 
-create table own(
+create table invoice(
 pid int,
 cid int,
-primary key (pid,cid),
-foreign key (pid) references product(pid) on delete cascade on update cascade,
-foreign key (cid) references client(cid) on delete cascade on update cascade
-);
-
-create table assoc(
-pid int,
 fid int,
-primary key(pid,fid),
+orderNum int,
+primary key (pid,cid,fid),
 foreign key (pid) references product(pid) on delete cascade on update cascade,
+foreign key (cid) references client(cid) on delete cascade on update cascade,
 foreign key (fid) references files(fid) on delete cascade on update cascade
 );
 
+-- create table assoc(
+-- pid int,
+-- fid int,
+-- primary key(pid,fid),
+-- foreign key (pid) references product(pid) on delete cascade on update cascade,
+-- foreign key (fid) references files(fid) on delete cascade on update cascade
+-- );
+
 create table auth(
-id int,
+id serial,
 username varchar(30),
 password varchar(80),
 role varchar(300),

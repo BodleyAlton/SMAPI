@@ -5,24 +5,28 @@ class client(db.Model):
     contact = db.Column(db.Integer)
     first_name = db.Column(db.String(40))
     last_name = db.Column(db.String(40))
+    trn = db.Column(db.Integer)
     address_1 = db.Column(db.String(60))
     address_2 = db.Column(db.String(60))
     city = db.Column(db.String(60))
     parish = db.Column(db.String(12))
     country= db.Column(db.String(10))
     date_created=db.Column(db.Date)
+    username= db.Column(db.String(30),primary_key=True)
     
-    def __init__(self, cid,contact,first_name, last_name,address_1,address_2,city,parish,country,date_created):
-        self.cid= cid
+    def __init__(self,contact,first_name, last_name,trn,address_1,address_2,city,parish,country,date_created,username):
+        # self.cid= cid
         self.contact = contact
         self.first_name= first_name
         self.last_name= last_name
+        self.trn = trn
         self.address_1= address_1
         self.address_2 = address_2
         self.city = city
         self.parish = parish
         self.country= country
         self.date_created= date_created
+        self.username=username
         
 class product(db.Model):
     pid=  db.Column(db.Integer,autoincrement = True, primary_key=True)
@@ -57,21 +61,25 @@ class files(db.Model):
         self.file_name= file_name
     
 
-class own(db.Model):
+class invoice(db.Model):
     pid=  db.Column(db.Integer,primary_key=True)
     cid= db.Column(db.Integer,primary_key=True)
+    fid= db.Column(db.Integer,primary_key=True)
+    orderNum= db.Column(db.Integer)
     
-    def __init__(self, pid,cid):
+    def __init__(self, pid,cid,fid,orderNum):
         self.pid
         self.cid
+        self.fid
+        self.orderNum
         
-class assoc(db.Model):
-    pid=  db.Column(db.Integer,primary_key=True)
-    fid= db.Column(db.Integer,primary_key=True)
+# class assoc(db.Model):
+#     pid=  db.Column(db.Integer,primary_key=True)
+#     fid= db.Column(db.Integer,primary_key=True)
     
-    def __init__(self,pid,fid):
-        self.pid=pid
-        self.fid=fid
+#     def __init__(self,pid,fid):
+#         self.pid=pid
+#         self.fid=fid
         
 class auth(db.Model):
     __tablename__="auth"
@@ -80,8 +88,8 @@ class auth(db.Model):
     password= db.Column(db.String(80))
     role= db.Column(db.String(300))
     
-    def __init__(self, id,username,password,role):
-        self.id=id
+    def __init__(self,username,password,role):
+        # self.id=id
         self.username= username
         self.password= password
         self.role= role
