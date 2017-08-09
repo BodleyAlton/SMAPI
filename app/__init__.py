@@ -6,6 +6,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://admin:qwert@localhost/smapi"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True # added just to suppress a warning
 app.config['SECRET_KEY']= "Pinkele234!"
+app.config['UPLOAD_FOLDER']= "./app/static/client-invoice"
 
 db = SQLAlchemy(app)
 

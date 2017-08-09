@@ -30,6 +30,8 @@ class client(db.Model):
         
 class product(db.Model):
     pid=  db.Column(db.Integer,autoincrement = True, primary_key=True)
+    ordernum= db.Column(db.Integer)
+    billno= db.Column(db.Integer)
     title = db.Column(db.String(50))
     descr= db.Column(db.String(70))
     status= db.Column(db.String(10))
@@ -38,8 +40,9 @@ class product(db.Model):
     width = db.Column(db.Integer)
     height = db.Column(db.Integer)
     
-    def __init__(self,pid,title,descr,status,weight,leng,width,height):
-        self.pid=pid
+    def __init__(self,ordernum,billno,title,descr,status,weight,leng,width,height):
+        self.ordernum=ordernum
+        self.billno=billno
         self.title= title
         self.descr= descr
         self.status= status
@@ -53,25 +56,27 @@ class files(db.Model):
     file_type= db.Column(db.String(5))
     file_path=db.Column(db.String(40))
     file_name= db.Column(db.String(30))
+    upload_date= db.Column(db.Date)
+    ext= db.Column(db.String(5))
     
-    def __init__(self,fid,file_type,file_path,file_name):
-        self.fid=fid
+    def __init__(self,file_type,file_path,file_name,upload_date,ext):
         self.file_type= file_type
         self.file_path= file_path
         self.file_name= file_name
+        self.upload_date= upload_date
+        self.ext= ext
     
 
 class invoice(db.Model):
-    pid=  db.Column(db.Integer,primary_key=True)
-    cid= db.Column(db.Integer,primary_key=True)
+    inid= db.Column(db.Integer,autoincrement=True, primary_key=True)
+    trn= db.Column(db.Integer,primary_key=True)
     fid= db.Column(db.Integer,primary_key=True)
-    orderNum= db.Column(db.Integer)
+    ordernum= db.Column(db.Integer)
     
-    def __init__(self, pid,cid,fid,orderNum):
-        self.pid
-        self.cid
-        self.fid
-        self.orderNum
+    def __init__(self,trn,fid,ordernum):
+        self.trn= trn
+        self.fid= fid
+        self.ordernum= ordernum
         
 # class assoc(db.Model):
 #     pid=  db.Column(db.Integer,primary_key=True)
